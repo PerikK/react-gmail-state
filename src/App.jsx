@@ -8,13 +8,41 @@ function App() {
   // Use initialEmails for state
   const [emails, setEmails] = useState(initialEmails)
   const [hideRead, setHideRead] = useState(false)
+  const [currentTab, setCurrentTab] = useState('inbox')
 
+  
+  function handleToggleRead(index) {
+    const readEmails = [...emails]; 
+    readEmails[index].read = !readEmails[index].read;
+    setEmails(readEmails); 
+  }
+  
+  function handleToggleStarred(index) {
+    const starredEmails = [...emails]; 
+    starredEmails[index].starred = !starredEmails[index].starred;
+    setEmails(starredEmails); 
+  }
+  
+  let numOfStarred = 0
+  function handleEmailsSelection() {
+    let emailsToShow = emails
+    if (hideRead) {
+      emailsToShow = emails.filter((email) => !email.read)
+    }
+    if (currentTab === 'starred') {
+      emailsToShow = emailsToShow.filter((email) => email.starred)
+      numOfStarred = emailsToShow.length
+      console.log(numOfStarred);
+    }
+    // console.log('read', emailsToShow);
+    // console.log('toggle', hideRead);
 
- 
-
+    return emailsToShow
+  }
+  
   function handleEmailDisplay(emails) {
 
-    const emailsToDisplay = handleHideReadEmails(emails);
+    const emailsToDisplay = handleEmailsSelection(emails);
 
     return emailsToDisplay.map((email, index) => (
       <li className="email" key={index}>
@@ -34,30 +62,8 @@ function App() {
     ));
   }
 
-  function handleToggleRead(index) {
-    const readEmails = [...emails]; 
-    readEmails[index].read = !readEmails[index].read;
-    setEmails(readEmails); 
-  }
+  // console.log(initialEmails)
   
-  function handleToggleStarred(index) {
-    const starredEmails = [...emails]; 
-    starredEmails[index].starred = !starredEmails[index].starred;
-    setEmails(starredEmails); 
-  }
-
-  function handleHideReadEmails() {
-    let emailsToShow = emails
-    if (hideRead) {
-      emailsToShow = emails.filter((email) => !email.read)
-    }
-    console.log('read',emailsToShow);
-    return emailsToShow
-  }
-  
-  console.log(initialEmails)
-  
-
   return (
     <div className="app">
       <Header />
@@ -65,17 +71,17 @@ function App() {
         <ul className="inbox-list">
           <li
             className="item active"
-            // onClick={() => {}}
+            onClick={() => setCurrentTab('inbox') }
           >
             <span className="label">Inbox</span>
-            <span className="count">?</span>
+            <span className="count">{ emails.length }</span>
           </li>
           <li
             className="item"
-            // onClick={() => {}}
+            onClick={() => setCurrentTab('starred')}
           >
             <span className="label">Starred</span>
-            <span className="count">?</span>
+            <span className="count">{numOfStarred}</span>
           </li>
 
           <li className="item toggle">
