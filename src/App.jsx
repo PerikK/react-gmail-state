@@ -9,8 +9,24 @@ function App() {
   const [emails, setEmails] = useState(initialEmails)
 
 
-  console.log(initialEmails)
+  // console.log(initialEmails)
 
+function handleEmailDisplay(emails) {
+  return emails.map((email, index) => (
+    <li className="email" key={index}>
+      <div className="select">
+        <input className="select-checkbox" type="checkbox" />
+      </div>
+      <div className="star">
+        <input className="star-checkbox" type="checkbox" />
+      </div>
+      <div className="sender">{email.sender}</div>
+      <div className="title">{email.title}</div>
+    </li>
+  ));
+  }
+  
+  
   return (
     <div className="app">
       <Header />
@@ -42,23 +58,7 @@ function App() {
           </li>
         </ul>
       </nav>
-      <main className="emails">{emails.map((email, index) => {
-        return (
-           <li className="email" key={index}>
-           <div className="select">
-           <input
-             className="select-checkbox" type="checkbox"/>
-           </div>
-           <div className="star">
-           <input className="star-checkbox" type="checkbox"/>
-           </div>
-           <div className="sender">{email.sender}</div>
-           <div className="title">{email.title}</div>
-         </li>
-         ) 
-        }
-      )}
-      </main>
+      <main className="emails">{handleEmailDisplay(emails)}</main>
     </div>
   )
 }
