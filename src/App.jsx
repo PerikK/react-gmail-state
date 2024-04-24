@@ -20,7 +20,9 @@ function App() {
           />
         </div>
         <div className="star">
-          <input className="star-checkbox" type="checkbox" />
+          <input className="star-checkbox" type="checkbox"
+            checked={email.starred} onChange={() => handleToggleStarred(index)}
+          />
         </div>
         <div className="sender">{email.sender}</div>
         <div className="title">{email.title}</div>
@@ -33,8 +35,14 @@ function App() {
     updatedEmails[index].read = !updatedEmails[index].read;
     setEmails(updatedEmails); 
   }
-   console.log(initialEmails)
-
+  
+  function handleToggleStarred(index) {
+    const updatedEmails = [...emails]; 
+    updatedEmails[index].starred = !updatedEmails[index].starred;
+    setEmails(updatedEmails); 
+  }
+  
+  console.log(initialEmails)
 
   return (
     <div className="app">
