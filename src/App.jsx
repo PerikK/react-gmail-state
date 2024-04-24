@@ -7,12 +7,16 @@ import './styles/App.css'
 function App() {
   // Use initialEmails for state
   const [emails, setEmails] = useState(initialEmails)
+  const [hideRead, setHideRead] = useState(false)
 
 
  
 
   function handleEmailDisplay(emails) {
-    return emails.map((email, index) => (
+
+    const emailsToDisplay = handleHideReadEmails(emails);
+
+    return emailsToDisplay.map((email, index) => (
       <li className="email" key={index}>
         <div className="select">
           <input className="select-checkbox" type="checkbox"
@@ -31,18 +35,28 @@ function App() {
   }
 
   function handleToggleRead(index) {
-    const updatedEmails = [...emails]; 
-    updatedEmails[index].read = !updatedEmails[index].read;
-    setEmails(updatedEmails); 
+    const readEmails = [...emails]; 
+    readEmails[index].read = !readEmails[index].read;
+    setEmails(readEmails); 
   }
   
   function handleToggleStarred(index) {
-    const updatedEmails = [...emails]; 
-    updatedEmails[index].starred = !updatedEmails[index].starred;
-    setEmails(updatedEmails); 
+    const starredEmails = [...emails]; 
+    starredEmails[index].starred = !starredEmails[index].starred;
+    setEmails(starredEmails); 
+  }
+
+  function handleHideReadEmails() {
+    let emailsToShow = emails
+    if (hideRead) {
+      emailsToShow = emails.filter((email) => !email.read)
+    }
+    console.log('read',emailsToShow);
+    return emailsToShow
   }
   
   console.log(initialEmails)
+  
 
   return (
     <div className="app">
@@ -65,12 +79,12 @@ function App() {
           </li>
 
           <li className="item toggle">
-            <label for="hide-read">Hide read</label>
+            <label htmlFor="hide-read">Hide read</label>
             <input
               id="hide-read"
               type="checkbox"
-              checked={false}
-              // onChange={() => {}}
+              checked={hideRead}
+              onChange={() => {setHideRead(!hideRead)}}
             />
           </li>
         </ul>
