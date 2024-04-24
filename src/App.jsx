@@ -23,7 +23,7 @@ function App() {
     setEmails(starredEmails); 
   }
   
-  let numOfStarred = 0
+  // let numOfStarred = 0
   function handleEmailsSelection() {
     let emailsToShow = emails
     if (hideRead) {
@@ -31,13 +31,23 @@ function App() {
     }
     if (currentTab === 'starred') {
       emailsToShow = emailsToShow.filter((email) => email.starred)
-      numOfStarred = emailsToShow.length
-      console.log(numOfStarred);
+      // numOfStarred = emailsToShow.length
+      // console.log(numOfStarred);
     }
-    // console.log('read', emailsToShow);
-    // console.log('toggle', hideRead);
 
     return emailsToShow
+  }
+
+  // function getStarredNum() {
+  //   const starredArr = handleEmailsSelection()
+
+  //   starredArr.filter((email) => email.starred)
+  //   // console.log(starredArr);
+  //   return starredArr
+  // }
+
+  function getStarredNum() {
+    return handleEmailsSelection().filter((email) => email.starred)   
   }
   
   function handleEmailDisplay(emails) {
@@ -81,7 +91,7 @@ function App() {
             onClick={() => setCurrentTab('starred')}
           >
             <span className="label">Starred</span>
-            <span className="count">{numOfStarred}</span>
+            <span className="count">{ getStarredNum().length }</span>
           </li>
 
           <li className="item toggle">
