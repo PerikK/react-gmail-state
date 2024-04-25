@@ -10,10 +10,10 @@ function App() {
   const [hideRead, setHideRead] = useState(false)
   const [currentTab, setCurrentTab] = useState('inbox')
 
-  
+
   function handleToggleRead(index) {
     const readEmails = [...emails]; 
-    readEmails[index].read = !readEmails[index].read;
+    readEmails[index].read = !readEmails[index].read;    
     setEmails(readEmails); 
   }
   
@@ -23,7 +23,6 @@ function App() {
     setEmails(starredEmails); 
   }
   
-  // let numOfStarred = 0
   function handleEmailsSelection() {
     let emailsToShow = emails
     if (hideRead) {
@@ -31,20 +30,10 @@ function App() {
     }
     if (currentTab === 'starred') {
       emailsToShow = emailsToShow.filter((email) => email.starred)
-      // numOfStarred = emailsToShow.length
-      // console.log(numOfStarred);
     }
 
     return emailsToShow
   }
-
-  // function getStarredNum() {
-  //   const starredArr = handleEmailsSelection()
-
-  //   starredArr.filter((email) => email.starred)
-  //   // console.log(starredArr);
-  //   return starredArr
-  // }
 
   function getStarredNum() {
     return handleEmailsSelection().filter((email) => email.starred)   
@@ -100,12 +89,12 @@ function App() {
               id="hide-read"
               type="checkbox"
               checked={hideRead}
-              onChange={() => {setHideRead(!hideRead)}}
+              onChange={ () => { setHideRead(!hideRead) } }
             />
           </li>
         </ul>
       </nav>
-      <main className="emails">{handleEmailDisplay(emails)}</main>
+      <main className="emails">{ handleEmailDisplay(emails) }</main>
     </div>
   )
 }
